@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Enhancements in JDK 7</title><link rel="stylesheet" href="../../../technotes/css/guide.css" />
+</head>
+<body>
+<!-- STATIC HEADER -->
+
+<!-- header start -->
+<div id="javaseheader">
+<div id="javaseheaderlogo">
+<img src="../../../images/javalogo.gif"
+alt="Java logo" />
+</div>
+<div id="javaseheaderindex">
+
+<a href=
+"../../../index.html">Documentation Contents</a>
+</div>
+<div class="clear"></div>
+</div>
+
+<!-- header end -->
+
+
+<h1>Enhancements in JDK 7</h1>
+<p>From JDK 7 Update 21, the RMI property <b><code>java.rmi.server.useCodebaseOnly</code></b> is set to <b>true</b> by default. In earlier releases, the default value was <b><code>false</code></b>.</p>
+
+<p><b>Note</b>: This change is also applicable to JDK 6 Update 45 and JDK 5 Update 45 releases.</p>
+
+<p>When set to <code>false</code>, this property allows one side of an RMI connection to specify a network location (URL) from which the other side of the RMI connection should load Java classes. The typical use of this mechanism is for RMI clients and servers to be able to provide remote interfaces and data classes to each other, without the need for configuration.</p>
+
+<p>If the JVM at one end of an RMI connection specifies one or more URLs in its <b><code>java.rmi.server.codebase</code></b> system property, that information is passed over the RMI connection to the other end. If the receiving JVM has its <b><code>java.rmi.server.useCodebaseOnly</code></b> system property set to <code>false</code>, it will then attempt to use those URLs for loading Java classes referenced in the RMI request stream.</p>
+
+<p>The behavior of loading classes from locations specified by the remote end of the RMI connection, is disabled when the <b><code>java.rmi.server.useCodebaseOnly</code></b> is set to <b><code>true</code></b>. In this case, classes are loaded only from preconfigured locations, such as the locally-specified <b><code>java.rmi.server.codebase</code></b> property or the local CLASSPATH, and not from <code>codebase</code> information passed through the RMI request stream.</p>
+
+<p>This change of default value may cause RMI-based applications to break unexpectedly. The typical symptom is a stack trace that contains a <code>java.rmi.UnmarshalException</code> containing a nested <code>java.lang.ClassNotFoundException</code>.</p>
+
+<p>If these exceptions occur, the preferred way to solve the problem is to configure all RMI clients and servers to use the same codebase, by specifying proper values in the <b><code>java.rmi.server.codebase</code></b> system property. This is typically done by adding the <b><code>-D</code></b> option to the command that starts up the application:</p>
+
+<code>java -Djava.rmi.server.codebase=file:///&lt;path-to-remote-classes&gt;/</code>
+
+<p>It may also be necessary to adjust the permissions in the application's security policy file in order to allow access to the location specified by the URL. This involves granting permissions such as <b><code>FilePermission</code></b> and <b><code>SocketPermission</code></b>.</p>
+
+<p>To configure the <b>rmiregistry</b> daemon to use a specific codebase, the following syntax can be used:</p>
+
+<code>rmiregistry -J<b>-D</b>java.rmi.server.codebase=file:///&lt;path-to-remote-classes&gt;/</code>
+
+<p>A different syntax is required to specify the codebase for activation group JVMs started by <b><code>rmid</code></b>. This daemon does not process RMI requests itself, but it creates JVM subprocesses to handle RMI requests. The syntax for specifying the codebase for <b><code>rmid</code></b> subprocesses is as follows:</p>
+
+<code>rmid -C-Djava.rmi.server.codebase=file:///&lt;path-to-remote-classes&gt;/</code>
+
+<p>In some cases it may be difficult or impossible to preconfigure RMI clients or servers or the <b><code>rmiregistry</code></b> or <b><code>rmid</code></b> daemons with a specific codebase. If this is the case, a way to resolve the incompatibility is simply to set the <b><code>java.rmi.server.useCodebaseOnly</code></b> property back to <b><code>false</code></b>. This can be done using the following command line options:</p>
+
+<code>java -Djava.rmi.server.useCodebaseOnly=false</code>
+
+<p>The analogous syntax is used with the <b><code>rmiregistry</code></b> and <b><code>rmid</code></b> commands.</p>
+
+<p><em>Caution: Running a system with the <code>java.rmi.server.useCodebaseOnly</code> property set to <code>false</code> is not recommended, as it may allow the loading and execution of untrusted code.</em></p>
+
+<h2>For More Information</h2>
+<ul>
+<li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/index.html">RMI Documentation</a> for information on RMI.</li>
+<li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/rmi/codebase.html">Dynamic Code Downloading using Java RMI</a> for information on RMI code loading and the codebase mechanism.</li>
+<li><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/permissions.html">Permissions in Java SE 7</a> for information on setting permissions in security policy files.</li>
+</ul>
+
+<!-- ================================================ -->
+
+<!--  footer start -->
+<div id="javasefooter">
+<div class="hr">
+<hr /></div>
+<div id="javasecopyright">
+<img id="oraclelogofooter" src=
+"../../../images/oraclelogo.gif" alt="Oracle and/or its affiliates"
+border="0" width="100" height="29" name=
+"oraclelogofooter" />
+
+<a href="../../../legal/cpyr.html">Copyright
+&#169;</a> 1993, 2014, Oracle and/or its affiliates. All rights
+reserved.</div>
+<div id="javasecontactus">
+<a href=
+"http://docs.oracle.com/javase/feedback.html">Contact
+Us</a>
+</div>
+</div>
+<!-- footer end -->
+
+<!-- STATIC FOOTER -->
+
+</body>
+</html>

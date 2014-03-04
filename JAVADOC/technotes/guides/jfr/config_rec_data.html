@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta content="text/html; charset=us-ascii" http-equiv="Content-Type"/>
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta content="text/javascript" http-equiv="Content-Script-Type"/>
+<title>Controlling Recording Data by Using Templates</title>
+<meta content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.22 Build 1" name="generator"/>
+<meta content="2013-11-28T23:37:41Z" name="date"/>
+<meta content="This chapter describes how to use templates for controlling the information that the flight recordings capture." name="description"/>
+<meta content="noarchive" name="robots"/>
+<meta content="Controlling Recording Data by Using Templates" name="doctitle"/>
+<meta content="Release 1.0" name="relnum"/>
+<meta content="E28976-01" name="partnum"/>
+<link href=".html" rel="copyright" title="Copyright" type="text/html"/>
+<link href="../../dcommon/css/blafdoc.css" rel="stylesheet" title="Oracle BLAFDoc" type="text/css"/>
+<link href="toc.html" rel="contents" title="Contents" type="text/html"/>
+<link href="usingjfr.html" rel="prev" title="Previous" type="text/html"/>
+<link href="troubleshoot_sec.html" rel="next" title="Next" type="text/html"/><link rel="stylesheet" href="../../../technotes/css/guide.css" />
+</head>
+<body>
+<!-- STATIC HEADER -->
+
+<!-- header start -->
+<div id="javaseheader">
+<div id="javaseheaderlogo">
+<img src="../../../images/javalogo.gif"
+alt="Java logo" />
+</div>
+<div id="javaseheaderindex">
+
+<a href=
+"../../../index.html">Documentation Contents</a>
+</div>
+<div class="clear"></div>
+</div>
+
+<!-- header end -->
+
+
+<b>Java Platform, Standard Edition Java Flight Recorder Runtime Guide</b><br/>
+
+<a href="toc.html">
+                Contents</a>&nbsp;&nbsp;&nbsp;<a href="usingjfr.html">
+                Previous</a>&nbsp;&nbsp;&nbsp;<a href="troubleshoot_sec.html">
+                Next</a><hr/><a id="CIACJAFC" name="CIACJAFC"/>
+<h1><span>4</span> Controlling Recording Data by Using Templates</h1>
+<p>This chapter describes how to use templates for controlling the information that the flight recordings capture.</p>
+<p>This chapter contains the following sections:</p>
+<ul>
+<li>
+<p><a href="#CIAECGAH">Section 4.1, "What You Can Control"</a></p>
+</li>
+<li>
+<p><a href="#CIADABGF">Section 4.2, "Flight Recording Templates"</a></p>
+</li>
+</ul>
+<a id="CIAECGAH" name="CIAECGAH"/>
+<div>
+<h2><span>4.1</span> What You Can Control</h2>
+<p>Almost everything about Java Flight Recorder can be controlled through different kinds of settings. To control the amount of data that is recorded, you can configure the following information for each type of event:</p>
+<ul>
+<li>
+<p><i>Enabled</i>; you can enable or disable each event type for a particular recording. Disabling events that occur often (such as synchronization events) helps reduce the size of the recording.</p>
+</li>
+<li>
+<p><i>Threshold</i>; you can filter events that have duration by setting a threshold. Events with shorter duration than the threshold are not saved.</p>
+</li>
+<li>
+<p><i>Stack trace</i>; you can enable or disable stack trace information for each event for the point from which the event is generated. Creating stack traces can be costly but can be extremely helpful to understanding why the event happened.</p>
+</li>
+<li>
+<p><i>Request periods</i>; you can configure the frequency with which a <i>requestable</i> events is requested by Java Flight Recorder.</p>
+</li>
+</ul>
+<p>Java Flight Recorder uses templates so that you do not need to modify all these configuration options every time you start a recording. Sets of best-known options for different tasks have been stored in both Mission Control templates and server-side templates. You can use these templates as is or you can modify them to suit your needs.</p>
+<div align="center">
+<div><br/>
+<table border="1" cellpadding="3" cellspacing="0" frame="hsides" rules="groups" summary="" width="80%">
+<tbody>
+<tr>
+<td align="left">
+<p><b>WARNING:</b></p>
+<p>Even though the data format for a flight recording file is extremely compact, enabling too many event types in the recording, especially resource heavy onessuch as those that frequently collect stack tracesmight produce large amounts of data and increase performance overhead.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br/></div>
+</div>
+</div>
+
+<a id="CIADABGF" name="CIADABGF"/>
+<div>
+<h2><span>4.2</span> Flight Recording Templates</h2>
+<p>Before you start a recording, you can select a template to use in the Java Flight Recording wizard (see <a href="quickstart.html#CHDGEAIE">Figure 2-1</a>). The template controls which events will be enabled during the recording. The following templates are available by default:</p>
+<ul>
+<li>
+<p>Continuous</p>
+<p>For continuous use in production environments with less than one percent overhead.</p>
+</li>
+<li>
+<p>Profiling</p>
+<p>For general purpose profiling with around two percent overhead.</p>
+</li>
+</ul>
+<p>You can use the Template Manager to add a new template or modify existing ones. You can also export templates to share with others, and import templates from other environments.</p>
+<a id="CIACJEFA" name="CIACJEFA"/>
+<div>
+<h3><span>4.2.1</span> Server-side Templates</h3>
+<p>Java Flight Recorder comes with two preconfigured server-side templates:</p>
+<ul>
+<li>
+<p><code>default.jfc</code>, which is tuned for very low performance overhead and recommended for continuous production use.</p>
+</li>
+<li>
+<p><code>profile.jfc</code>, which provides a good balance between the amount of information available and the performance overhead introduced, making it ideal for profiling.</p>
+</li>
+</ul>
+<p>Both templates are located in the JDK installation directory under <code>jre/lib/jfr</code>. You can create you own server-side templates by copying the default ones and modifying your copy. Do not modify the default templates.</p>
+<p>When starting a recording from the command line or by using a diagnostic command, you can specify the template to be used as an argument to the <code>settings</code> parameter. The following example shows how to start a recording lasting five minutes using the <code>profile.jfc</code> template on a running Java application named <code>MyApp</code>:</p>
+<pre xml:space="preserve">
+jcmd MyApp JFR.start duration=5min settings=profile
+</pre>
+<p>The following example shows how to start the <code>MyApp</code> application with Java Flight Recorder enabled and configured to use settings from the <code>default.jfc</code> template, and at the same time start a recording:</p>
+<pre xml:space="preserve">
+java MyApp -XX:+UnlockCpmmercialFeatures -XX:+FlightRecorder -XX:FlightRecorderOptions=defaultrecording=true,settings=default -XX:+StartFlightRecording
+
+</pre></div>
+</div>
+<a href="toc.html">
+                Contents</a>&nbsp;&nbsp;&nbsp;<a href="usingjfr.html">
+                Previous</a>&nbsp;&nbsp;&nbsp;<a href="troubleshoot_sec.html">
+                Next</a><hr/>
+
+
+
+
+
+<!--  footer start -->
+<div id="javasefooter">
+<div class="hr">
+<hr /></div>
+<div id="javasecopyright">
+<img id="oraclelogofooter" src=
+"../../../images/oraclelogo.gif" alt="Oracle and/or its affiliates"
+border="0" width="100" height="29" name=
+"oraclelogofooter" />
+
+<a href="../../../legal/cpyr.html">Copyright
+&#169;</a> 1993, 2014, Oracle and/or its affiliates. All rights
+reserved.</div>
+<div id="javasecontactus">
+<a href=
+"http://docs.oracle.com/javase/feedback.html">Contact
+Us</a>
+</div>
+</div>
+<!-- footer end -->
+
+<!-- STATIC FOOTER -->
+
+</body>
+</html>

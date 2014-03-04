@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta content="text/html; charset=us-ascii" http-equiv="Content-Type"/>
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta content="text/javascript" http-equiv="Content-Script-Type"/>
+<title>Introduction to Java Mission Control</title>
+<meta content="Oracle DARB XHTML Converter (Mode = document) - Version 1.0.22 Build 1" name="generator"/>
+<meta content="2013-11-09T0:38:48Z" name="date"/>
+<meta content="This chapter provides an overview of Java Mission Control (JMC) and its features." name="description"/>
+<meta content="noarchive" name="robots"/>
+<meta content="Introduction to Java Mission Control" name="doctitle"/>
+<meta content="Release 5.2" name="relnum"/>
+<meta content="E28023-03" name="partnum"/>
+<link href=".html" rel="copyright" title="Copyright" type="text/html"/>
+<link href="../../dcommon/css/blafdoc.css" rel="stylesheet" title="Oracle BLAFDoc" type="text/css"/>
+<link href="toc.html" rel="contents" title="Contents" type="text/html"/>
+<link href="preface.html" rel="prev" title="Previous" type="text/html"/>
+<link href="jmc.html" rel="next" title="Next" type="text/html"/><link rel="stylesheet" href="../../../technotes/css/guide.css" />
+</head>
+<body>
+<!-- STATIC HEADER -->
+
+<!-- header start -->
+<div id="javaseheader">
+<div id="javaseheaderlogo">
+<img src="../../../images/javalogo.gif"
+alt="Java logo" />
+</div>
+<div id="javaseheaderindex">
+
+<a href=
+"../../../index.html">Documentation Contents</a>
+</div>
+<div class="clear"></div>
+</div>
+
+<!-- header end -->
+
+
+<b>Java Platform, Standard Edition Java Mission Control User's Guide</b><br/>
+
+<a href="toc.html">
+                Contents</a>&nbsp;&nbsp;&nbsp;<a href="preface.html">
+                Previous</a>&nbsp;&nbsp;&nbsp;<a href="jmc.html">
+                Next</a><hr/><a id="CEGIAGIG" name="CEGIAGIG"/>
+<h1><span>1</span> Introduction to Java Mission Control</h1>
+<p>This chapter provides an overview of Java Mission Control (JMC) and its features.</p>
+<p>The Java Mission Control Client includes tools to monitor and manage your Java application without introducing the performance overhead normally associated with these types of tools.</p>
+<p>The Java Mission Control's low performance overhead is a result of using data collected as part of the Java JVM's normal adaptive dynamic optimization. This also eliminates the problem with the Heisenberg anomaly that can occur when tools using byte code instrumentation alters the execution characteristics of the system. The Java Mission Control functionality can always be available on-demand and the small performance overhead is only in effect while the tools are running.</p>
+<p>This section contains information on the following topics:</p>
+<ul>
+<li>
+<p><a href="#A1007477">Section 1.1, "Java Mission Control Client and Plug-Ins"</a></p>
+</li>
+<li>
+<p><a href="#A132179453">Section 1.2, "Starting Java Mission Control Client"</a></p>
+</li>
+<li>
+<p><a href="#i1010333">Section 1.3, "Java Mission Control Documentation"</a></p>
+</li>
+<li>
+<p><a href="#i1008481">Section 1.4, "Java Mission Control Support"</a></p>
+</li>
+<li>
+<p><a href="#i1014117">Section 1.5, "Giving Feedback to the Java Mission Control Development Team"</a></p>
+</li>
+<li>
+<p><a href="#A1259592">Section 1.6, "Abbreviations"</a></p>
+</li>
+</ul>
+<a id="A1007477" name="A1007477"/>
+<div>
+<h2><span>1.1</span> Java Mission Control Client and Plug-Ins</h2>
+<p>The Java Mission Control Client is the application from which you connect to a JVM and start the tools that are included in JMC. On startup, the client shows the JVM Browser where you can choose a running JVM that you wish to monitor using one of the following methods:</p>
+<ul>
+<li>
+<p>Connect a Management Console to the running JVM. Using the Management Console you can monitor the JVM and Java application while they are running. You can even change some of the JVM properties in run time through Managed Beans (MBeans).</p>
+</li>
+<li>
+<p>Create a recording of all behavior during application runtime.</p>
+</li>
+</ul>
+<p>The JMC tools communicate with the JVM using a JMX agent.</p>
+<p>The plug-ins for Java Mission Control are:</p>
+<ul>
+<li>
+<p>Management Console, for run-time monitoring and management of your JVM and Java application</p>
+</li>
+<li>
+<p>Java Flight Recorder, for always-available real time and historic performance monitoring and profiling.</p>
+</li>
+</ul>
+<p>To start Java Mission Control Client, see <a href="#A132179453">"Starting Java Mission Control Client"</a>.</p>
+</div>
+
+<a id="A132179453" name="A132179453"/>
+<div>
+<h2><span>1.2</span> Starting Java Mission Control Client</h2>
+<p>The JMC client executable file is located in the <code>bin</code> directory of the Java Development Kit (JDK) installation path (<code>JAVA_HOME</code>). If the <code>JAVA_HOME/bin</code> directory is in the <code>PATH</code> environment variable, you can start the JMC client by entering <code>jmc</code> at the coomand line prompt (shell). Otherwise, you have to specify the full path to the JMC executable:</p>
+<ul>
+<li>
+<p><code>JAVA_HOME\bin\jmc.exe</code> (Windows)</p>
+</li>
+<li>
+<p><code>JAVA_HOME/bin/jmc</code> (Solaris, Linux, OS X)</p>
+</li>
+</ul>
+<div align="center">
+<div><br/>
+<table border="1" cellpadding="3" cellspacing="0" frame="hsides" rules="groups" summary="" width="80%">
+<tbody>
+<tr>
+<td align="left">
+<p><b>Note:</b></p>
+<p>On Windows, a shortcut to the JMC client executable is added to the <b>Java Development Kit</b> folder under <b>All Programs</b> in the <b>Start</b> menu.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br/></div>
+</div>
+<a id="sthref7" name="sthref7"/>
+<p><b>Passing JVM Options To the JMC Launcher</b></p>
+<p>JMC is a Java application, and the JMC client executable is a launcher for this application. JMC startup is controlled by options specified in the <code>jmc.ini</code> file, which is located in the <code>JAVA_HOME/bin</code> directory. Arguments to the <code>-vmargs</code> option in the <code>jmc.ini</code> file are options that are passed to the JVM running the JMC application. You can specify these options to control the way this JVM runs. If you do not want to modify the <code>jmc.ini</code> file, you can specify JVM options on the command line as arguments to the <code>-vmargs</code> option of the <code>jmc</code> command.</p>
+<div align="center">
+<div><br/>
+<table border="1" cellpadding="3" cellspacing="0" frame="hsides" rules="groups" summary="" width="80%">
+<tbody>
+<tr>
+<td align="left">
+<p><b>Note:</b></p>
+<p>If other options are specified for the <code>jmc</code> command, the <code>-vmargs</code> option must be specified last.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br/></div>
+</div>
+<p>To start the JMC client with your own set of JVM options, overriding those specified in the <code>jmc.ini</code> file, run the following command (separate multiple arguments with spaces):</p>
+<pre xml:space="preserve">
+jmc -vmarg <i>arguments</i>
+</pre>
+<p>To start the JMC client with additional JVM options, appending them to those specified in the <code>jmc.ini</code> file, run the following command (separate multiple arguments with spaces):</p>
+<pre xml:space="preserve">
+jmc --launcher.appendVmargs -vmarg <i>arguments</i>
+</pre>
+<a id="sthref8" name="sthref8"/>
+<p><b>Using a Workspace Directory</b></p>
+<p>If you want to copy your settings for the JMC client to another computer or another user, or use different predefined settings for different applications, add the <code>-data</code> command-line option and define a <i>workspace directory</i> when you start the JMC client:</p>
+<pre xml:space="preserve">
+jmc -data <i>workspace-directory</i>
+</pre>
+<a id="sthref9" name="sthref9"/>
+<p><b>Running JMC on OS X</b></p>
+<p>On OS X, when you launch the JMC executable, the Terminal window opens. When you close the JMC client, the Terminal is left behind with the text <code>[Process completed]</code>. To avoid this, open the Terminal <b>Preferences</b>, then open the <b>Settings</b> tab, select the scheme you use, then select the <b>Shell</b> tab, and change the <b>When the shell exits</b> option to <b>Close if the shell exited cleanly</b>.</p>
+</div>
+
+<a id="i1010333" name="i1010333"/>
+<div>
+<h2><span>1.3</span> Java Mission Control Documentation</h2>
+<p>Documentation for Java Mission Control Client is available as online help with the installation of the tool.</p>
+</div>
+
+<a id="i1008481" name="i1008481"/>
+<div>
+<h2><span>1.4</span> Java Mission Control Support</h2>
+<p>You can contact Oracle Support for technical assistance if you are entitled to the Oracle Support services for Java Mission Control. The following types of licenses include support for Java Mission Control:</p>
+<ul>
+<li>
+<p>Oracle Java SE Advanced</p>
+</li>
+<li>
+<p>Oracle Java SE Suite</p>
+</li>
+<li>
+<p>WebLogic Server Enterprise Edition</p>
+</li>
+<li>
+<p>WebLogic Suite</p>
+</li>
+</ul>
+</div>
+
+<a id="i1014117" name="i1014117"/>
+<div>
+<h2><span>1.5</span> Giving Feedback to the Java Mission Control Development Team</h2>
+<p>If you have any suggestions about how to improve the Java Mission Control plug-ins or information on how it is most commonly used in your development environments, post a comment on the Java Mission Control forum. This information would contribute to our understanding on how to best further improve these tools in the future.</p>
+<p>To submit an idea or other feedback, post a comment on the Java Mission Control forum, which is monitored by the Mission Control engineering team at: <code><a href="https://forums.oracle.com/forums/forum.jspa?forumID=1419">https://forums.oracle.com/forums/forum.jspa?forumID=1419</a></code>.</p>
+<p>The feedback will be considered by the development team designing the Java Mission Control plug-ins. Oracle will look at collected ideas and improve the plug-ins to make them even easier to use. Oracle's goal with these plug-ins is to simplify the tasks in getting your applications to run as smoothly as possible on the Java HotSpot VM.</p>
+</div>
+
+<a id="A1259592" name="A1259592"/>
+<div>
+<h2><span>1.6</span> Abbreviations</h2>
+<p><a href="#CHDDDCAE">Table 1-1</a> lists some of the abbreviations used in the Java Mission Control Client.</p>
+<div><a id="sthref10" name="sthref10"/><a id="CHDDDCAE" name="CHDDDCAE"/>
+<p>Table 1-1 Abbreviations Used in the Java Mission Control Client</p>
+<table border="1" cellpadding="3" cellspacing="0" dir="ltr" frame="hsides" rules="rows" summary="Tablle 3 is a two-column definition table that defines the abbreviations used in JRockit Mission Control Client. The left column lists the abbreviations. The right column spells out the abbreviations" title="Abbreviations Used in the Java Mission Control Client" width="100%">
+<col width="21%"/>
+<col width="*"/>
+<thead>
+<tr align="left" valign="top">
+<th align="left" id="r1c1-t4" valign="bottom">Abbreviation</th>
+<th align="left" id="r1c2-t4" valign="bottom">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r2c1-t4">
+<p>GC</p>
+</td>
+<td align="left" headers="r2c1-t4 r1c2-t4">
+<p>Garbage Collection (memory management)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r3c1-t4">
+<p>JDK</p>
+</td>
+<td align="left" headers="r3c1-t4 r1c2-t4">
+<p>Java Development Kit</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r4c1-t4">
+<p>JDP</p>
+</td>
+<td align="left" headers="r4c1-t4 r1c2-t4">
+<p>Java Discovery Protocol</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r5c1-t4">
+<p>JIT</p>
+</td>
+<td align="left" headers="r5c1-t4 r1c2-t4">
+<p>Just in Time (compilation)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r6c1-t4">
+<p>JMX</p>
+</td>
+<td align="left" headers="r6c1-t4 r1c2-t4">
+<p>Java Management Extensions</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r7c1-t4">
+<p>JVM</p>
+</td>
+<td align="left" headers="r7c1-t4 r1c2-t4">
+<p>Java Virtual Machine</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r8c1-t4">
+<p>MBean</p>
+</td>
+<td align="left" headers="r8c1-t4 r1c2-t4">
+<p>Managed Bean (Java)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r9c1-t4">
+<p>RCP</p>
+</td>
+<td align="left" headers="r9c1-t4 r1c2-t4">
+<p>Rich Client Platform (Eclipse)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r10c1-t4">
+<p>RMI</p>
+</td>
+<td align="left" headers="r10c1-t4 r1c2-t4">
+<p>Remote Method Invocation (Java)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r11c1-t4">
+<p>SSL</p>
+</td>
+<td align="left" headers="r11c1-t4 r1c2-t4">
+<p>Secure Socket Layer (communication)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" headers="r1c1-t4" id="r12c1-t4">
+<p>TLA</p>
+</td>
+<td align="left" headers="r12c1-t4 r1c2-t4">
+<p>Thread Local Area (memory management)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br/></div>
+</div>
+<a href="toc.html">
+                Contents</a>&nbsp;&nbsp;&nbsp;<a href="preface.html">
+                Previous</a>&nbsp;&nbsp;&nbsp;<a href="jmc.html">
+                Next</a><hr/>
+
+
+
+
+
+<!--  footer start -->
+<div id="javasefooter">
+<div class="hr">
+<hr /></div>
+<div id="javasecopyright">
+<img id="oraclelogofooter" src=
+"../../../images/oraclelogo.gif" alt="Oracle and/or its affiliates"
+border="0" width="100" height="29" name=
+"oraclelogofooter" />
+
+<a href="../../../legal/cpyr.html">Copyright
+&#169;</a> 1993, 2014, Oracle and/or its affiliates. All rights
+reserved.</div>
+<div id="javasecontactus">
+<a href=
+"http://docs.oracle.com/javase/feedback.html">Contact
+Us</a>
+</div>
+</div>
+<!-- footer end -->
+
+<!-- STATIC FOOTER -->
+
+</body>
+</html>

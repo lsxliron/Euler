@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xml:lang=
+"en-US">
+<head>
+<title>Descriptions of Images from Java Cryptography Architecture (JCA) Reference Guide</title>
+<link rel="stylesheet" href="../../../../technotes/css/guide.css" />
+</head>
+<body>
+<!-- STATIC HEADER -->
+
+<!-- header start -->
+<div id="javaseheader">
+<div id="javaseheaderlogo">
+<img src="../../../../images/javalogo.gif"
+alt="Java logo" />
+</div>
+<div id="javaseheaderindex">
+
+<a href=
+"../../../../index.html">Documentation Contents</a>
+</div>
+<div class="clear"></div>
+</div>
+
+<!-- header end -->
+
+
+
+<h1>Descriptions of Images from Java Cryptography Architecture (JCA) Reference Guide</h1>
+
+<p>The following are text descriptions of images used in <a href="CryptoSpec.html">Java Cryptography Architecture (JCA) Reference Guide</a>
+
+<h2><a name="md5-message-digest-implementation"/>Description of Figure 1: <a href="CryptoSpec.html#md5-message-digest-implementation_image">MD5 Message Digest Implementation</a></h2>
+
+<p>This figure consists of two diagrams. The first diagram represents an application that requests and MD5 algorithm implementation without specifying a provider name. The second diagram represents an application that requests and MD5 algorithm implementation from a specific provider:</p>
+
+<h3>Without Specifying Provider Name</h3>
+
+<p>This figure consists of five cylinders arranged in three rows. These cylinders, from top to bottom, are labeled as follows:</p>
+
+<ul>
+  <li>Application</li>
+  <li>Provider Framework</li>
+  <li>This row contains three cylinders. Each cylinder in this row has an arrow pointing up towards the cylinder above it (Provider Framework):
+    <ul>
+      <li>ProviderA: Message Digest SHA-1 SHA-256 (this cylinder has an <code>X</code> on it)</li>
+      <li>ProviderB: Message Digest MD5 SHA-512 (this cylinder has a check mark on it)</li>
+      <li>ProviderC: Message Digest MD5 SHA-256</li>
+    </ul>
+  </li>
+</ul>
+
+<p>An arrow labeled <code>MessageDigest_getInstance("MD5")</code> with an arrow head labeled "MDS MessageDigest from ProviderB" starts from the Application cylinder and passes through the following objects:</p>
+
+<ul>
+  <li>Provider Framework cylinder</li>
+  <li>ProviderA arrow</li>
+  <li>ProviderB arrow</li>
+  <li>Provider Framework cylinder (again)</li>
+</ul>
+
+<p>The arrow head points to the Application cylinder.</p>
+
+
+<h3>From Specific Provider</h3>
+
+
+<p>This figure consists of five cylinders arranged in three rows. These cylinders, from top to bottom, are labeled as follows:</p>
+
+<ul>
+  <li>Application</li>
+  <li>Provider Framework</li>
+  <li>This row contains three cylinders. Each cylinder in this row has an arrow pointing up towards the cylinder above it (Provider Framework):
+    <ul>
+      <li>ProviderA: Message Digest SHA-1 SHA-256</li>
+      <li>ProviderB: Message Digest MD5 SHA-512 </li>
+      <li>ProviderC: Message Digest MD5 SHA-256 (this cylinder has a check mark on it)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>An arrow labeled <code>MessageDigest_getInstance("MD5", "ProviderC")</code> with an arrow head labeled "MDS MessageDigest from ProviderC" starts from the Application cylinder and passes through the following objects:</p>
+
+<ul>
+  <li>Provider Framework cylinder</li>
+  <li>ProviderC arrow</li>
+  <li>Provider Framework cylinder (again)</li>
+</ul>
+
+<p>The arrow head points to the Application cylinder.</p>
+
+<h2><a name="example-of-how-application-retrieves-aes-cipher-intstance"/>Description of Figure 2: <a href="CryptoSpec.html#example-of-how-application-retrieves-aes-cipher-intstance_image">Example of How Application Retrieves "AES" Cipher Instance</a></h2>
+
+<p>This figure consists of five boxes:</p>
+
+<ul>
+  <li><p>Application: This box contains the following pseudocode:</p>
+  <pre>c:Cipher.getInstance("AES");</pre>
+  </li>
+  <li><p>JCA/JCE: This box contains the following list:</p>
+    <ul>
+      <li>Signature</li>
+      <li>Message Digest</li>
+      <li>Key Script Generator</li>
+      <li>Key Factory</li>
+      <li>Algorithm Parameters</li>
+      <li>Cipher</li>
+      <li>Key Agreement</li>
+      <li>Key Generator</li>
+      <li>Secret Key Factory</li>
+      <li>MAC</li>
+    </ul>
+  </li>
+  <li><p>CSP, CSP2, CSP3: These boxes represent cryptographic service providers</p></li>
+  <li><p>The fifth box represents CSP3. It contains the following headers and pseudocode:</p>
+    <ul>
+      <li><p>Provider.class</p>
+      <pre>"Cipher.AES" -&gt; "com.foo.AESCipher"</pre></li>
+      <li><p>com.foo.AESCipher.class</p>
+<pre>package com.foo:
+  class AESCipher extends CipherSPi {
+    .
+    .
+    .
+  }</pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<p>Arrows connect the boxes as follows:</p>
+
+<ul>
+  <li>From Application to JCA/JCE</li>
+  <li>From JCA/JCE to CSP1, CSP2, and CSP3 (the arrow branches)</li>
+</ul>
+
+<p>A dotted line connects CSP3 to the headings Provider.class and com.foo.AESCipher.class</p>
+
+<h2><a name="example-of-provider-subclass"/>Description of Figure 3: <a href="CryptoSpec.html#example-of-provider-subclass_image">Example of Provider Subclass</a></h2>
+
+
+<p>This figure consists of a cylinder labeled Provider C and a box. Dotted lines are used to indicate that Provider C contains the contents of the box. The box contains the following headers and Java code:</p>
+
+<ul>
+  <li><p>provider.java</p>
+  <pre>public class fooJCA extends Provider {
+    .
+    .
+    .
+    put("MessageDigest.MD5", "com.foo.MD5");
+    .
+    .
+    .
+{}</pre></li>
+   <li><p>com.foo.MD5.java</p>
+   <pre>package com.foo;
+public class MD5 extends
+    MessageDigestSpi {
+    .
+    .
+    .
+}</pre></li></ul>
+
+<h2><a name="securerandom"/>Description of Figure 4: <a href="CryptoSpec.html#securerandom_image">The SecureRandom Class</a></h2>
+
+<p>This figure consists of three boxes labeled as follows:</p>
+
+<ul>
+  <li>Seed</li>
+  <li>SecureRandom (SHA1PRNG)</li>
+  <li>data</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>setSeed()</code>: From Seed to SecureRandom (SHA1PRNG)</li>
+  <li><code>digest()</code> and <code>nextBytes()</code>: From SecureRandom (SHA1PRNG) to data</li>
+</ul>
+
+
+
+<h2><a name="messageDigest"/>Description of Figure 5: <a href="CryptoSpec.html#messageDigest_image">The MessageDigest Class</a></h2>
+
+<p>This figure consists of three boxes labeled as follows:</p>
+
+<ul>
+  <li>Data</li>
+  <li>Message Digest (MD5)</li>
+  <li>Digest/Hash</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>update()</code>: From Data to Message Digest (MD5)</li>
+  <li><code>digest()</code>: From Message Digest (MD5) to Digest/Hash</li>
+</ul>
+
+
+<h2><a name="signature"/>Description of Figure 6: <a href="CryptoSpec.html#signature_image">The Signature Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Generated by a Key Pair Generator: Contains a box labeled Private Key/Public Key</li>
+  <li>Data</li>
+  <li>These two boxes are attached to each other:
+    <ul>
+      <li>Signature (MD5withRSA): Box 1 of 2</li>
+      <li>Sign</li>
+    </ul>
+  </li>
+    <li>Signature Bytes</li>
+    <li>These two boxes are attached to each other:
+    <ul>
+      <li>Signature (MD5withRSA): Box 2 of 2</li>
+      <li>Verify</li>
+    </ul>
+  </li>
+  <li>Yes/No</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>update()</code>: From Data to Signature (MD5withRSA) #1</li>
+  <li><code>update()</code>: From Data to Signature (MD5withRSA) #2</li>
+  <li><code>sign()</code>: From Signature (MD5withRSA) #1 to Signature Bytes</li>
+  <li><code>verify()</code>: From Signature Bytes Data to Signature (MD5withRSA) #2</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Generated by a Key Pair Generator to Signature (MD5withRSA) #1 and Signature (MD5withRSA) #2 (the arrow branches)</li>
+  <li>From Signature (MD5withRSA) #2 to Yes/No</li>
+</ul>
+
+
+<h2><a name="cipher"/>Description of Figure 7: <a href="CryptoSpec.html#cipher_image">The Cipher Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Key: Contains a box labeled Secret Key</li>
+  <li>Plaintext</li>
+  <li>These two boxes are attached to each other:
+    <ul>
+      <li>Cipher (AES): Box 1 of 2</li>
+      <li>Encrypt</li>
+    </ul>
+  </li>
+  <li>Algorithm Parameters</li>
+  <li>Ciphertext</li>
+  <li>These two boxes are attached to each other:
+    <ul>
+      <li>Cipher (AES): Box 2 of 2</li>
+      <li>Decrypt</li>
+    </ul>
+  </li>
+  <li>Plaintext</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>update()</code>: From Plaintext to the Cipher (AES) #1</li>
+  <li><code>doFinal()</code>: From Plaintext to Encrypt</li>
+  <li><code>update()</code>: From Ciphertext to the Cipher (AES) #2</li>
+  <li><code>doFinal()</code>: From Ciphertext to Decrypt</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Key to the Cipher (AES) #1 and Cipher (AES) #2 (the arrow branches)</li>
+  <li>From Cipher (AES) #1 to Algorithm Parameters</li>
+  <li>From Algorithm Parameters to the Cipher (AES) compartment of the Decrypt box</li>
+  <li>From Cipher (AES) #2 to Plaintext</li>
+  <li>From Decrypt to Plaintext</li>
+</ul>
+
+
+<h2><a name="mac"/>Description of Figure 8: <a href="CryptoSpec.html#mac_image">The Mac Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Data: Two boxes are labeled this</li>
+  <li>MAC (HmacMD5): Two boxes are labeled this</li>
+  <li>Shared Secret Key</li>
+  <li>Signal Digest Hash: Two boxes are labeled this</li>
+  <li>If data was the same, the hash is the same</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>update()</code>: From Data #1 to MAC (HmacMD5) #1</li>
+  <li><code>doFinal()</code>: From Data #1 to MAC (HmacMD5) #1</li>
+  <li><code>update()</code>: From Data #2 to MAC (HmacMD5) #2</li>
+  <li><code>doFinal()</code>: From Data #2 to MAC (HmacMD5) #2</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Shared Secret Key to MAC (HmacMD5) (two separate arrows)</li>
+  <li>From MAC (HmacMD5) #1 to Signed Digest Hash #1</li>
+  <li>From MAC (HmacMD5) #2 to Signed Digest Hash #2</li>
+  <li>From Signed Digest Hash #1 to If data was the same, the hash is the same</li>
+  <li>From Signed Digest Hash #2 to If data was the same, the hash is the same</li>
+</ul>
+
+<h2><a name="differences-between-generators-and-factories"/>Description of Figure 9: <a href="CryptoSpec.html#differences-between-generators-and-factories_image">Differences Between Generators and Factories</a></h2>
+
+<p>This figure consists of two diagrams:</p>
+
+<h3>Generators</h3>
+
+<p>This diagram contains the following caption: <strong>Generators</strong> &mdash; Generate new objects based on initialization parameters</p>
+
+<p>It consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Initialization Parameters (Key Length)</li>
+  <li>Generator</li>
+  <li>Object Secret Key</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Initialization Parameters (Key Length) to Generator</li>
+  <li>From Generator to Object Secret Key</li>
+</ul>  
+
+<h3>Factories</h3>
+
+<p>This diagram contains the following caption: <strong>Factories</strong> &mdash; Transform existing specific objects into other object types</p>
+
+<p>It consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Type 1 Key Spec</li>
+  <li>Factory</li>
+  <li>Type 2 Secret Key</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Type 1 Key Spec to Factory</li>
+  <li>From Factory to Type 2 Secret Key</li>
+</ul>  
+
+
+<h2><a name="keyfactory"/>Description of Figure 10: <a href="CryptoSpec.html#keyfactory_image">The KeyFactory Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Key Spec</li>
+  <li>Key Factory (RSA): Two boxes are labeled this</li>
+  <li>Private Key</li>
+  <li>Public Key</li>
+  <li>Key Spec</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>generatePrivate()</code>: From Key Factory (RSA) #1 to Private Key</li>
+  <li><code>generatePublic()</code>: From Key Factory (RSA) #1 to Public Key</li>
+  <li><code>getKeySpec()</code>: From Key Factory (RSA) #2 to Key Spec</li>
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Key Spec to Key Factory (RSA) #1</li>
+  <li>From Key to Key Factory (RSA) #2</li>
+</ul>  
+
+
+<h2><a name="secretkeyfactory"/>Description of Figure 11: <a href="CryptoSpec.html#secretkeyfactory_image">The SecretKeyFactory Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>Key Spec: Two boxes are labeled this</li>
+  <li>Secret Key Factory (DES): This box has a sublabel, <code>generateSecret()</code></li>
+  <li>Secret Key: Two boxes are labeled this</li>
+  <li>Secret Key Factory (DES): This box has a sublabel, <code>getKeySpec()</code></li>
+
+</ul>
+
+<p>Unlabeled arrows connect these boxes:</p>
+
+<ul>
+  <li>From Key Spec #1 to Secret Key Factory (DES), <code>generateSecret()</code></li>
+  <li>From Secret Key Factory (DES), <code>generateSecret()</code> to Secret Key #1</li>
+  <li>From Secret Key #2 to Secret Key Factory (DES), <code>getKeySpec()</code></li>
+  <li>From Secret Key Factory (DES), <code>getKeySpec()</code> to Key Spec #2</li>
+</ul>  
+
+
+
+<h2><a name="keypairgenerator"/>Description of Figure 12: <a href="CryptoSpec.html#keypairgenerator_image">The KeyPairGenerator Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>These boxes are joined by the word "or":
+    <ul>
+      <li>key length</li>
+      <li>AlgorithmParameterSpec</li>
+    </ul>
+  </li>
+  <li>Key Pair Generator (DH)</li>
+  <li>Key Pair</li>
+  <li>Private Key</li>
+  <li>Public Key</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>init()</code>: From key length to Key Pair Generator (DH)</li>
+  <li><code>init()</code>: From AlgorithmParameterSpec to Key Pair Generator (DH)</li>
+  <li><code>genKeyPair()</code>: From Key Pair Generator (DH) to Key Pair</li>
+  <li><code>getPrivate()</code>: From Key Pair to Private Key</li>
+  <li><code>getPublic()</code>: From Key Pair to Public Key</li>
+</ul>
+
+
+
+<h2><a name="keygenerator"/>Description of Figure 13: <a href="CryptoSpec.html#keygenerator_image">The KeyGenerator Class</a></h2>
+
+<p>This figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>These boxes are joined by the word "or":
+    <ul>
+      <li>key length</li>
+      <li>AlgorithmParameterSpec</li>
+    </ul>
+  </li>
+  <li>Key Generator (AES)</li>
+  <li>Secret Key</li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li><code>init()</code>: From key length to Key Generator (AES)</li>
+  <li><code>init()</code>: From AlgorithmParameterSpec to Key Generator (AES)</li>
+  <li><code>generateKey()</code>: From Key Generator (AES) to Secret Pair</li>
+</ul>
+
+
+
+<h2><a name="keyagreement"/>Description of Figure 14: <a href="CryptoSpec.html#keyagreement_image">The KeyAgreement Class</a></h2>
+
+<p>This figure is divided into halves by a dashed line. The top half is labeled Alice, and the bottom half is labeled Bob. The figure consists of boxes labeled as follows:</p>
+
+<ul>
+  <li>These boxes are in Alice's half:
+    <ul>
+      <li>Key: This box contains a box labeled Alice's Private</li>
+      <li>Key: This box contains a box labeled Bob's Public</li>
+      <li>Key Agreement (DH)</li>
+      <li>Bytes: This box has another label, Bytes</li>
+    </ul>
+  </li>
+  <li>These boxes are in Bob's half:
+    <ul>
+      <li>Key: This box contains a box labeled Bob's Private</li>
+      <li>Key: This box contains a box labeled Alice's Public</li>
+      <li>Key Agreement (DH)</li>
+      <li>Bytes: This box has another label, Bytes</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Labeled arrows connect these boxes:</p>
+
+<ul>
+  <li>These arrows are in Alice's half:
+    <ul>
+      <li><code>init()</code>: From Alice's Private Key to Key Agreement (DH)</li>
+      <li><code>doPhase()</code>: From Bob's Public Key to Key Agreement (DH)</li>
+      <li><code>generateSecret()</code>: From Key Agreement (DH) to Bytes</li>
+    </ul>
+  </li>
+  <li>These arrows are in Bob's half:
+    <ul>
+      <li><code>init()</code>: From Bob's Private Key to Key Agreement (DH)</li>
+      <li><code>doPhase()</code>: From Alice's Public Key to Key Agreement (DH)</li>
+      <li><code>generateSecret()</code>: From Key Agreement (DH) to Bytes</li>
+    </ul>
+  </li>
+</ul>
+
+<p>A double-headed arrow joins the Bytes boxes in Alice's and Bob's halves. This arrow is labeled "Should be the same."</p>
+
+<ul>
+  <li><code>init()</code>: From key length to Key Generator (AES)</li>
+  <li><code>init()</code>: From AlgorithmParameterSpec to Key Generator (AES)</li>
+  <li><code>generateKey()</code>: From Key Generator (AES) to Secret Pair</li>
+</ul>
+
+
+<h2><a name="keystore"/>Description of Figure 15: <a href="CryptoSpec.html#keystore_image">The KeyStore Class</a></h2>
+
+<p>This figure consists of a table labeled JKS and a cylinder labeled File.</p>
+
+<p>The table JKS contains the following:</p>
+
+<table border="1" summary="JKS Table in Figure 15: The KeyStore Class">
+  <tr>
+    <th>Alias</th>
+    <th>Type</th>
+    <th>Data</th>
+  </tr>
+  <tr>
+    <td>Brad</td>
+    <td>Secret Key</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>Milton</td>
+    <td>Trusted Certificate</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>Duke</td>
+    <td>Trusted Certificate</td>
+    <td>...</td>
+  </tr>
+    
+</table>
+
+<p>An arrow labeled <code>store()</code> points from the JKS table to the File cylinder. An arrow labeled <code>load()</code> points from the File cylinder to the JKS cylinder.</p>
+
+<h2><a name="ssl-messages"/>Description of Figure 16: <a href="CryptoSpec.html#ssl-messages_image">SSL Messages</a></h2>
+
+<p>This figure contains two lists of steps that are next to each other. The list to the left is labeled Client. The list to the right is labeled Server.</p>
+
+<p>The Client list contains the following items:</p>
+
+<ul>
+  <li>1. Client hello</li>
+  <li>7. Certificate <em>optional</em></li>
+  <li>8. Client key exchange</li>
+  <li>9. Certificate verify <em>optional</em></li>
+  <li>10. Change cipher spec</li>
+  <li>11. Finished</li>
+  <li>14. Encrypted data</li>
+  <li>15. Close messages</li>
+</ul>
+
+<p>Five empty lines separate item 1. Client hello and item 7. Certificate. Two empty lines separate item 11. Finished and item 14. Finished.</p>
+
+<p>The Server list contains the following items:</p>
+
+<ul>
+  <li>2. Server hello</li>
+  <li>3. Certificate <em>optional</em></li>
+  <li>4. Certificate request <em>optional</em></li>
+  <li>5. Server key exchange <em>optional</em></li>
+  <li>6. Server hello done</li>
+  <li>12. Change cipher spec</li>
+  <li>13. Finished</li>
+  <li>14. Encrypted data</li>
+  <li>15. Close messages</li>
+</ul>
+
+<p>Five empty lines separate item 6. Server hello done and item 12. Change cipher spec.</p>
+
+<p>An arrow points from each item in the Client list to the corresponding empty line in the Server list. Similarly, an arrow points from each item in the Server list to the corresponding empty line in the Client list. For items 14 and 15 in the Client and Server lists, double-headed arrows connect them instead.</p>
+
+
+<!--  footer start -->
+<div id="javasefooter">
+<div class="hr">
+<hr /></div>
+<div id="javasecopyright">
+<img id="oraclelogofooter" src=
+"../../../../images/oraclelogo.gif" alt="Oracle and/or its affiliates"
+border="0" width="100" height="29" name=
+"oraclelogofooter" />
+
+<a href="../../../../legal/cpyr.html">Copyright
+&#169;</a> 1993, 2014, Oracle and/or its affiliates. All rights
+reserved.</div>
+<div id="javasecontactus">
+<a href=
+"http://docs.oracle.com/javase/feedback.html">Contact
+Us</a>
+</div>
+</div>
+<!-- footer end -->
+
+<!-- STATIC FOOTER -->
+
+</body>
+</html>
